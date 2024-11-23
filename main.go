@@ -11,8 +11,6 @@ import (
 func main() {
 	database.Connect()
 
-	// * => pointer reference to the address
-	// & => print the reference of the name
 	app := fiber.New()
 
 	routes.Setup(app)

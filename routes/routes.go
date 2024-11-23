@@ -7,4 +7,6 @@ import (
 
 func Setup(app *fiber.App) {
 	app.Get("/", controllers.Hello)
+	app.Get("/dog", controllers.Dog)
+	app.Get("/login", controllers.Login)
 }
