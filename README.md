@@ -7,7 +7,7 @@
 - location services: dog parks
 
 ### To do 
-- so much! (lel)
-- [] Set up the frontend with the backend
-- [] Refactor to Gin vs Fiber for http2 support
+- so much! (lel) Where to start???
+- [ ] Set up the frontend with the backend
+- [ ] Refactor to Gin vs Fiber for http2 support
 
