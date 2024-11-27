@@ -1,10 +1,13 @@
 ## ButtSnfr
 
 #### Connect to other dog owners with dogs of similar temperments
-- user setup
+
+- user setup (login/logout/user page/jwt)
 - messages
 - location services: dog parks
 
-## To run this locally during development
-`go run main.go`
+### To do 
+- so much! (lel)
+- [] Set up the frontend with the backend
+- [] Refactor to Gin vs Fiber for http2 support
 
