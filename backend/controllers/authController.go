@@ -1,15 +1,32 @@
 package controllers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/rwshen/buttSnfr/database"
+	"github.com/rwshen/buttSnfr/models"
+)
 
-func Hello(c *fiber.Ctx) error {
-	return c.SendString("Hello dog lovers")
-}
+func Register(c *gin.Context) {
+	var data map[string]string
 
-func Dog(c *fiber.Ctx) error {
-	return c.SendString("Here is the dog route")
-}
+	if err := c.BindJSON(&data); err != nil {
+	}
 
-func Login(c *fiber.Ctx) error {
-	return c.SendString("This will be the login route")
+	// confirm passwords at registration match
+
+	if data["password"] != data["confirm_password"] {
+		c.JSON(400, gin.H{
+			"message": "passwords do not match"})
+	}
+
+	user := models.User{
+		FirstName: data["first_name"],
+		LastName:  data["last_name"],
+	}
+
+	user.SetPassword(data["password"])
+
+	// store it in the database
+	database.DB.Create(&user)
+
 }

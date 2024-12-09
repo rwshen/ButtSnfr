@@ -1,19 +1,16 @@
 package main
 
 import (
-	"log"
-
-	"github.com/gofiber/fiber/v2"
+	"github.com/gin-gonic/gin"
+	"github.com/rwshen/buttSnfr/controllers"
 	"github.com/rwshen/buttSnfr/database"
-	"github.com/rwshen/buttSnfr/routes"
 )
 
 func main() {
 	database.Connect()
 
-	app := fiber.New()
+	r := gin.Default()
+	r.POST("/api/register", controllers.Register)
+	r.Run() // listen and serve on 0.0.0.0:8080
 
-	routes.Setup(app)
-
-	log.Fatal(app.Listen(":8000"))
 }

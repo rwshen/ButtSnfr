@@ -4,26 +4,26 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
+	"github.com/rwshen/buttSnfr/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
+
+var DB *gorm.DB
 
 func Connect() {
 	// load environmental variables
 	godotenv.Load()
 	dbStr := os.Getenv("USERNAME") + ":" + os.Getenv("PASSWORD") + "@/buttSnfr"
 	// set up mysql db
-	_, err := gorm.Open(mysql.Open(dbStr), &gorm.Config{})
+	database, err := gorm.Open(mysql.Open(dbStr), &gorm.Config{})
 
 	if err != nil {
 		panic("Could not connect to db")
 	}
 
-}
+	DB = database
 
-type User struct {
-	gorm.Model
-	username string
-	password string
-	age      int
+	database.AutoMigrate(&models.User{})
+
 }
