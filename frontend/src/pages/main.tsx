@@ -3,6 +3,6 @@ import React from 'react';
 export default function Main() {
 
     return (
-        <div>main</div>
+        <div>main dog sniffer logic</div>
     )
 }
