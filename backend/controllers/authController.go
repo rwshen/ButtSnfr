@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/rwshen/buttSnfr/database"
 	"github.com/rwshen/buttSnfr/models"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Register(c *gin.Context) {
@@ -13,20 +14,21 @@ func Register(c *gin.Context) {
 	}
 
 	// confirm passwords at registration match
-
 	if data["password"] != data["confirm_password"] {
 		c.JSON(400, gin.H{
 			"message": "passwords do not match"})
 	}
 
+	hashedEmail, _ := bcrypt.GenerateFromPassword([]byte(data["email"]), 14)
+
 	user := models.User{
 		FirstName: data["first_name"],
 		LastName:  data["last_name"],
+		Email:     hashedEmail,
 	}
 
 	user.SetPassword(data["password"])
 
 	// store it in the database
 	database.DB.Create(&user)
-
 }
