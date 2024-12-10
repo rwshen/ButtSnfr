@@ -20,11 +20,13 @@ func Register(c *gin.Context) {
 	}
 
 	hashedEmail, _ := bcrypt.GenerateFromPassword([]byte(data["email"]), 14)
+	hashedAddress, _ := bcrypt.GenerateFromPassword([]byte(data["address"]), 14)
 
 	user := models.User{
 		FirstName: data["first_name"],
-		LastName:  data["last_name"],
+		DogName:   data["dog_name"],
 		Email:     hashedEmail,
+		Address:   hashedAddress,
 	}
 
 	user.SetPassword(data["password"])

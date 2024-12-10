@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Main from "./main";
-import Register from "./register/page";
+import { Register } from "../components/Register";
 
 
 const geistSans = localFont({
@@ -17,11 +17,12 @@ const geistMono = localFont({
 
 export default function Home() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false)
+
   return (
     <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
+      className={`${geistSans.variable} ${geistMono.variable} grid items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
     >
-     {isUserLoggedIn ? <Main /> : <Register />}
+     <Register />
     </div>
   );
 }

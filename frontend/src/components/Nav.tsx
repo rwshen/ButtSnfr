@@ -16,7 +16,7 @@ export const Nav = () => {
         <div className='relative flex items-center'>
           <Link className='hover:text-white me-4 text-neutral-600 dark:text-white' href='/messages'>
             <span className='[&>svg]:w-5'>
-              Bark Center
+              Bark Park
             </span>
           </Link>
 
