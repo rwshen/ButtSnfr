@@ -7,6 +7,11 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+func ValidateAddress(address string) string {
+	// google address validate api
+	return address
+}
+
 func Register(c *gin.Context) {
 	var data map[string]string
 
