@@ -13,8 +13,25 @@ export const Register = () => {
   useEffect(() => {
   }, [])
 
+  const validateAddress = useCallback(async (address: string) => {
+    console.log(address)
+    const response = await fetch('https://addressvalidation.googleapis.com/v1:provideValidationFeedback?key=', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "address": {
+          "addressLines": [address]
+        }
+      })
+    })
+    console.log(await response)
+  },[])
+
   const submitForm = useCallback(async (e) => {
-    e.preventDefault()
+    const validAddress = await validateAddress(address)
     await fetch('http://127.0.0.1:8080/api/register', {
       method: 'POST',
       mode: 'no-cors',
@@ -24,7 +41,7 @@ export const Register = () => {
       body: JSON.stringify({
         first_name: humanName,
         dog_name: dogName,
-        address,
+        address: validAddress,
         password,
         email
       })
@@ -35,7 +52,7 @@ export const Register = () => {
       console.log(response)
       return response
     })
-  }, [])
+  }, [address, dogName, email, humanName, password, validateAddress])
 
   return (
     <div className='flex mt-40'>
@@ -57,7 +74,7 @@ export const Register = () => {
         <label className='pr-4'>Confirm password</label>
         <input className='mb-20' name='confirm_password' type='text' placeholder='password' value={confirmPassword} onChange={e => setConfirmPassword(e.currentTarget.value)} />
 
-        <button className='hover:text-yellow' onClick={(e) => submitForm(e)}>Submit</button>
+        <button className='hover:text-yellow' onClick={async (e) => await submitForm(e)}>Submit</button>
       </label>
     </div>
   )
