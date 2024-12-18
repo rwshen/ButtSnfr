@@ -67,7 +67,7 @@ export const Register = () => {
         <input className='mb-4' type='text' name='address' placeholder='Crate address' value={address} onChange={e => setAddress(e.currentTarget.value)} />
 
         <label className='pr-4'>Human&apos;s Email:</label>
-        <input className='mb-4' name='email' type='text' placeholder='Email' value={email} onChange={e => setEmail(e.currentTarget.value)} />
+        <input className='mb-4' name='email' type='email' placeholder='Email' value={email} onChange={e => setEmail(e.currentTarget.value)} />
 
         <label className='pr-4'>Create a password</label>
         <input className='mb-2' name='password' type='text' placeholder='password' value={password} onChange={e => setPassword(e.currentTarget.value)} />
