@@ -35,6 +35,7 @@ export const Register = () => {
     await fetch('http://127.0.0.1:8080/api/register', {
       method: 'POST',
       mode: 'no-cors',
+      redirect: 'follow',
       headers: {
         'Content-Type': 'application/json'
       },
