@@ -1,7 +1,7 @@
 import localFont from "next/font/local";
 import React, { useCallback, useEffect, useState } from "react";
 import Main from "./main";
-import { Register } from "../components/Register";
+import { Register } from "./api/Register";
 
 
 const geistSans = localFont({
