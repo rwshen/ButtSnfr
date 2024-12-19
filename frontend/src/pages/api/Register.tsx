@@ -2,7 +2,11 @@
 
 import React, { useCallback, useEffect, useState } from 'react'
 
-export const Register = () => {
+interface RegisterProps {
+  token: string;
+}
+
+export const Register = (token: RegisterProps) => {
   const [dogName, setDogName] = useState<string>('')
   const [humanName, setHumanName] = useState<string>('')
   const [address, setAddress] = useState<string>('')
@@ -13,50 +17,9 @@ export const Register = () => {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
 
-  const oAuthRequest = useCallback(async () => {
-
-    
-    const myHeaders = new Headers();
-
-    
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded")
-
-    const credentials = `${process.env.username}:${process.env.password}`;
-    const encodedCredentials = btoa(credentials);
-
-    myHeaders.append('Proxy-Authorization', `Basic ${encodedCredentials}`,)
-  
-    const requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: JSON.stringify({
-      "grant_type": "client_credentials",
-
-    }),
-    };
-    
-    return await fetch(`https://gate.smartproxy.com:10001/https://api.usps.com/oauth2/v3/token`, requestOptions)
-    .then(response => {
-      if (!response.ok) {
-          // Crucial: Get the error details from the response body.
-          console.log(response)
-      }
-      return response.json();
-  })
-  .then(data => {
-      // Handle successful response
-      console.log("OAuth Token:", data);
-  })
-  .catch(error => {
-      console.error("OAuth Request Error:", error);
-  });
-      // .then(response => response)
-  }, [])
-
   const validateAddress = useCallback(async (address, stateAddress, cityAddress) => {
-    const token = await oAuthRequest()
-
     const myHeaders = new Headers();
+    //get oAuth token from getStaticProps from index.tsx call
     myHeaders.append('Authorization', `Bearer ${token}`)
 
     const requestOptions = {
@@ -70,13 +33,13 @@ export const Register = () => {
       .catch(error => console.log('error', error));
     console.log(response)
     return response
-  }, [oAuthRequest])
+  }, [])
 
   const submitForm = useCallback(async (e) => {
     e.preventDefault();
     const validAddress = await validateAddress(address, stateAddress, cityAddress)
     console.log(await validAddress)
-    // await fetch('http://127.0.0.1:8080/api/register', {
+    // await fetch('${process.env.SMART_PROXY}/http://127.0.0.1:8080/api/register', {
     //   method: 'POST',
     //   mode: 'no-cors',
     //   headers: {

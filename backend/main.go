@@ -19,13 +19,13 @@ func main() {
 	r := gin.Default()
 	r.POST("/api/register", controllers.Register)
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{os.Getenv("SMART_PROXY"), "http://127.0.0.1:8080", "http://localhost:3000", "https://api.usps.com/"},
+		AllowOrigins:     []string{os.Getenv("SMART_PROXY"), "http://127.0.0.1:8080", "https://api.usps.com/"},
 		AllowMethods:     []string{"PUT", "PATCH", "POST", "GET"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			return origin == os.Getenv("SMART_PROXY")
+			return origin == "http://localhost:3000"
 		},
 	}))
 	r.Run() // listen and serve on 0.0.0.0:8080
