@@ -11,6 +11,7 @@ func main() {
 
 	r := gin.Default()
 	r.POST("/api/register", controllers.Register)
+	r.POST("/api/login", controllers.Login)
 	r.Run() // listen and serve on 0.0.0.0:8080
 
 }
