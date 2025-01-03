@@ -1,12 +1,9 @@
 'use client'
 
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
+import httpProxy from 'http-proxy'
 
-interface RegisterProps {
-  token: string;
-}
-
-export const Register = (token: RegisterProps) => {
+export const Register = ({token}) => {
   const [dogName, setDogName] = useState<string>('')
   const [humanName, setHumanName] = useState<string>('')
   const [address, setAddress] = useState<string>('')
@@ -19,21 +16,24 @@ export const Register = (token: RegisterProps) => {
 
   const validateAddress = useCallback(async (address, stateAddress, cityAddress) => {
     const myHeaders = new Headers();
-    //get oAuth token from getStaticProps from index.tsx call
-    myHeaders.append('Authorization', `Bearer ${token}`)
-
-    const requestOptions = {
+    console.log(token)
+    myHeaders.append("Authorization", `Bearer ${token}`)
+    
+    var requestOptions = {
       method: 'GET',
       headers: myHeaders,
-      mode: 'no-cors' as const,
-    }
-    const response = await fetch(`https://api.usps.com/addresses/v3/address?streetAddress=${address}&state=${stateAddress}&city=${cityAddress}`, requestOptions)
-      .then(response => response)
+      redirect: 'follow' as const,
+      credentials: 'same-origin' as const,
+    };
+    const API_URL = `https://api.usps.com/addresses/v3/address?streetAddress=${address}&state=${stateAddress}&city=${cityAddress}`
+    const proxy = httpProxy.createProxyServer()
+
+    return fetch(``, requestOptions)
+      .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));
-    console.log(response)
-    return response
   }, [])
+
 
   const submitForm = useCallback(async (e) => {
     e.preventDefault();
@@ -93,3 +93,7 @@ export const Register = (token: RegisterProps) => {
     </div>
   )
 }
+function getOAuthToken() {
+  throw new Error('Function not implemented.');
+}
+

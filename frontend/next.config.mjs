@@ -6,10 +6,11 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.SMART_PROXY}/:path*`
+        destination: `${process.env.SMART_PROXY}/api/:path*`,
       }
     ]
-  }
+  },
+
 }
 
 export default nextConfig

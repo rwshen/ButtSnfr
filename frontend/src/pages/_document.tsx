@@ -1,14 +1,15 @@
 'use client'
 
-import { Html, Head, Main, NextScript } from "next/document";
+import Document, { Html, Head, Main, NextScript } from "next/document";
 import React from 'react';
 import { Nav } from "@/components/Nav";
-import Home from ".";
 import { getStaticProps } from "./api/usps_oauth";
+import { Register } from "./api/Register";
 
 
-export default async function Document() {
-  return (
+export default class MyDocument extends Document {
+  render() {
+    return (
     <Html lang="en">
       <Head>
         <Nav />
@@ -16,8 +17,16 @@ export default async function Document() {
       <body className="antialiased">
         <Main />
         <NextScript />
-        <Home token={(await getStaticProps()).props.token} />
       </body>
     </Html>
   );
+  }
+}
+
+MyDocument.getInitialProps = async (ctx) => {
+  const initialProps = await Document.getInitialProps(ctx)
+ return {
+  ...initialProps,
+
+ }
 }

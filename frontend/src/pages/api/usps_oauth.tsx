@@ -1,4 +1,4 @@
-const getOAuthToken = async () => {
+export const getOAuthToken = async () => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json")
 
@@ -17,11 +17,11 @@ const getOAuthToken = async () => {
       console.error("\n\n\n\n OAuth Request Error:", error);
     });
 
-    return await res.access_token
+    return await res
 }
 
-export async function getStaticProps() {
- let access_token = await getOAuthToken();
+export async function getStaticProps(context) {
+ let { access_token } = await getOAuthToken();
  console.log('\n\n\n\n access_token', access_token)
   return {
     props: {
