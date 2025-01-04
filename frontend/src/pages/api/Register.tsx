@@ -1,9 +1,10 @@
 'use client'
 
 import React, { useCallback, useState } from 'react'
-import httpProxy from 'http-proxy'
+import { createProxyMiddleware } from "http-proxy-middleware"; // @2.0.6
 
-export const Register = ({token}) => {
+
+export const Register = ({ token }) => {
   const [dogName, setDogName] = useState<string>('')
   const [humanName, setHumanName] = useState<string>('')
   const [address, setAddress] = useState<string>('')
@@ -16,22 +17,29 @@ export const Register = ({token}) => {
 
   const validateAddress = useCallback(async (address, stateAddress, cityAddress) => {
     const myHeaders = new Headers();
-    console.log(token)
+    console.log(process.env.NEXT_PUBLIC_SMART_PROXY)
     myHeaders.append("Authorization", `Bearer ${token}`)
-    
+
+    const proxyAgent = createProxyMiddleware({
+      target: process.env.NEXT_PUBLIC_SMART_PROXY,
+      secure: false,
+      pathRewrite: { "^/api/proxy": "" }, // remove `/api/proxy` prefix
+    });
+
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow' as const,
-      credentials: 'same-origin' as const,
+      credentials: 'include' as const,
+      agent: proxyAgent
     };
-    const API_URL = `https://api.usps.com/addresses/v3/address?streetAddress=${address}&state=${stateAddress}&city=${cityAddress}`
-    const proxy = httpProxy.createProxyServer()
 
-    return fetch(``, requestOptions)
-      .then(response => response.text())
+    const API_URL = `https://api.usps.com/addresses/v3/address?streetAddress=${address}&state=${stateAddress}&city=${cityAddress}`
+
+    return await fetch(`${API_URL}`, requestOptions)
+      .then(response => console.log(response))
       .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+    // .catch(error => console.log('error', error));
   }, [])
 
 

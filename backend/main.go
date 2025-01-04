@@ -15,9 +15,8 @@ func main() {
 	// load environmental variables
 	godotenv.Load("/Users/rshen/Desktop/buttSnfr/.env")
 	database.Connect()
-
-	r := gin.Default()
-	r.POST("/api/register", controllers.Register)
+	gin.SetMode(gin.ReleaseMode)
+	r := gin.New()
 	r.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{os.Getenv("SMART_PROXY"), "http://127.0.0.1:8080", "https://api.usps.com/"},
 		AllowMethods:     []string{"PUT", "PATCH", "POST", "GET"},
@@ -25,10 +24,12 @@ func main() {
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
 		AllowOriginFunc: func(origin string) bool {
-			return origin == "http://localhost:3000"
+			return origin == os.Getenv("SMART_PROXY")
 		},
 	}))
 	r.POST("/api/login", controllers.Login)
+	r.POST("/api/register", controllers.Register)
+
 	r.Run() // listen and serve on 0.0.0.0:8080
 
 }
