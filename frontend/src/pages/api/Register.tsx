@@ -19,6 +19,7 @@ export const Register = ({ token }) => {
     const myHeaders = new Headers();
     console.log(process.env.NEXT_PUBLIC_SMART_PROXY)
     myHeaders.append("Authorization", `Bearer ${token}`)
+    myHeaders.append("Access-Control-Allow-Origin", "/");
 
     const proxyAgent = createProxyMiddleware({
       target: process.env.NEXT_PUBLIC_SMART_PROXY,
