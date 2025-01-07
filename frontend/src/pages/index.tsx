@@ -1,14 +1,29 @@
-import { PageProps, HeadFC } from "gatsby"
-import React from "react"
+import React from "react";
+import { getOAuthToken } from "../api/usps_oauth";
+import { Register } from "../api/Register";
+import { Nav } from "../components/Nav";
 
-const IndexPage: React.FC<PageProps> = () => {
+export default function Index(props: { token: any; }) {
   return (
-    <main>
-
-    </main>
-  )
+    <>
+      <head>
+        <Nav />
+      </head>
+      <div
+        className="grid items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]"
+      >
+        <Register token={JSON.stringify(props.token)} />
+      </div>
+    </>
+  );
 }
 
-export default IndexPage
-
-export const Head: HeadFC = () => <title>Home Page</title>
+export async function getStaticProps() {
+  const { access_token } = await getOAuthToken();
+  console.log('\n\n\n\n access_token', access_token)
+  return {
+    props: {
+      token: access_token,
+    },
+  };
+}
