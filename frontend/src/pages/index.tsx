@@ -6,15 +6,15 @@ import { Nav } from "../components/Nav";
 export default function Index(props: { token: any; }) {
   return (
     <>
-      <head>
+      <header>
         <Nav />
-      </head>
+      </header>
       <div
         className="grid items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]"
       >
         <Register token={JSON.stringify(props.token)} />
       </div>
-    </>
+      </>
   );
 }
 
