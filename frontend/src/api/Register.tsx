@@ -1,10 +1,10 @@
 import React, { useCallback, useState } from 'react'
 
-interface RegisterProps {
-    token: string;
-}
+// interface RegisterProps {
+//     token: string;
+// }
 
-export const Register = ({ token }: RegisterProps) => {
+export const Register = () => {
   const [dogName, setDogName] = useState<string>('')
   const [humanName, setHumanName] = useState<string>('')
   const [address, setAddress] = useState<string>('')
@@ -18,7 +18,7 @@ export const Register = ({ token }: RegisterProps) => {
   const validateAddress = useCallback(async (address: string, stateAddress: string, cityAddress: string) => {
     const myHeaders = new Headers();
     console.log(process.env.NEXT_PUBLIC_SMART_PROXY)
-    myHeaders.append("Authorization", `Bearer ${token}`)
+    // myHeaders.append("Authorization", `Bearer ${token}`)
     myHeaders.append("Access-Control-Allow-Origin", "/");
 
 
