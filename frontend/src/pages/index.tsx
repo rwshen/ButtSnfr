@@ -1,22 +1,30 @@
-import { Register } from "./api/Register";
-import { getOAuthToken } from "./api/usps_oauth";
+import { getOAuthToken } from "../api/usps_oauth";
+import { Dashboard } from "../components/Dashboard";
+import { Nav } from "../components/Nav";
+import React, {useState, useEffect} from "react";
 
-export default function Index(props) {
-    return (
+export default async function Index() {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [idToken, setIdToken] = useState<string | null>(localStorage.getItem('id_token'))
+  // const {access_token} = await getOAuthToken();
+  // console.log(access_token)
+  useEffect(() => {
+    if(idToken) {
+      setLoggedIn(true)
+    } setLoggedIn(false)
+  }, [])
+
+  return (
+    <>
+      <header>
+        <Nav />
+      </header>
       <div
         className="grid items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]"
       >
-        <Register token={JSON.stringify(props.token)}  />
+       {loggedIn && <Dashboard />} 
       </div>
-    );
-  }
-  
-  export async function getStaticProps() {
-   const { access_token } = await getOAuthToken();
-   console.log('\n\n\n\n access_token', access_token)
-    return {
-      props: {
-        token: access_token,
-      },
-    };
-  }
+      </>
+  );
+}
+

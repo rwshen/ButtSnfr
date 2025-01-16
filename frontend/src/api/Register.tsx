@@ -1,10 +1,10 @@
-'use client'
-
 import React, { useCallback, useState } from 'react'
-import { createProxyMiddleware } from "http-proxy-middleware"; // @2.0.6
 
+// interface RegisterProps {
+//     token: string;
+// }
 
-export const Register = ({ token }) => {
+export const Register = () => {
   const [dogName, setDogName] = useState<string>('')
   const [humanName, setHumanName] = useState<string>('')
   const [address, setAddress] = useState<string>('')
@@ -15,24 +15,18 @@ export const Register = ({ token }) => {
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
 
-  const validateAddress = useCallback(async (address, stateAddress, cityAddress) => {
+  const validateAddress = useCallback(async (address: string, stateAddress: string, cityAddress: string) => {
     const myHeaders = new Headers();
     console.log(process.env.NEXT_PUBLIC_SMART_PROXY)
-    myHeaders.append("Authorization", `Bearer ${token}`)
+    // myHeaders.append("Authorization", `Bearer ${token}`)
     myHeaders.append("Access-Control-Allow-Origin", "/");
 
-    const proxyAgent = createProxyMiddleware({
-      target: process.env.NEXT_PUBLIC_SMART_PROXY,
-      secure: false,
-      pathRewrite: { "^/api/proxy": "" }, // remove `/api/proxy` prefix
-    });
 
     var requestOptions = {
       method: 'GET',
       headers: myHeaders,
       redirect: 'follow' as const,
       credentials: 'include' as const,
-      agent: proxyAgent
     };
 
     const API_URL = `https://api.usps.com/addresses/v3/address?streetAddress=${address}&state=${stateAddress}&city=${cityAddress}`
@@ -44,7 +38,7 @@ export const Register = ({ token }) => {
   }, [])
 
 
-  const submitForm = useCallback(async (e) => {
+  const submitForm = useCallback(async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     const validAddress = await validateAddress(address, stateAddress, cityAddress)
     console.log(await validAddress)
@@ -101,8 +95,5 @@ export const Register = ({ token }) => {
       </label>
     </div>
   )
-}
-function getOAuthToken() {
-  throw new Error('Function not implemented.');
 }
 
