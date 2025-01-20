@@ -1,30 +1,29 @@
-import { getOAuthToken } from "../api/usps_oauth";
-import { Dashboard } from "../components/Dashboard";
-import { Nav } from "../components/Nav";
-import React, {useState, useEffect} from "react";
+import * as React from "react"
+import type { HeadFC, PageProps } from "gatsby"
+import { Nav } from "../components/Nav"
+import { useState } from "react"
+import { Dashboard } from "../components/Dashboard"
+import { Login } from "../components/Login"
 
-export default async function Index() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [idToken, setIdToken] = useState<string | null>(localStorage.getItem('id_token'))
-  // const {access_token} = await getOAuthToken();
-  // console.log(access_token)
-  useEffect(() => {
-    if(idToken) {
-      setLoggedIn(true)
-    } setLoggedIn(false)
-  }, [])
 
+const IndexPage: React.FC<PageProps> = () => {
+  const [loggedIn, setLoggedIn] = useState<string | null>(localStorage.getItem('id_token'))
+  console.log(loggedIn)
+  
   return (
     <>
-      <header>
-        <Nav />
-      </header>
-      <div
-        className="grid items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]"
-      >
-       {loggedIn && <Dashboard />} 
-      </div>
-      </>
-  );
+    <header>
+      <Nav />
+    </header>
+    <body>
+    {loggedIn && <Dashboard />}
+    {!loggedIn && <Login />}
+    </body>
+    </>
+  )
+
 }
 
+export default IndexPage
+
+export const Head: HeadFC = () => <title>ButtSnfr</title>
