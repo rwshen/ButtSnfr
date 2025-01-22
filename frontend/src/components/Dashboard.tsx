@@ -1,7 +1,12 @@
 import React from "react"
+import { BarkPark } from "./BarkPark"
 
 export const Dashboard = () => {
     return (
-        <div>Dashboard</div>
+        <main>
+            <span> 
+            <BarkPark />
+            </span>
+        </main>
     )
 }

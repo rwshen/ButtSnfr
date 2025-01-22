@@ -1,5 +1,6 @@
 import { Link } from 'gatsby'
 import React from 'react'
+import { Tooltip } from './Tooltip'
 
 export const Nav = () => {
   return (
@@ -15,18 +16,20 @@ export const Nav = () => {
         </Link>
 
         <div className='relative flex items-center'>
+          <Tooltip content="Messages" children={
           <Link className='hover:text-white me-4 text-neutral-600 dark:text-white' to='/messages'>
             <span className='[&>svg]:w-5'>
               Bark Park
             </span>
-          </Link>
+          </Link>} />
 
           <div
             className='relative'
             data-twe-dropdown-ref
             data-twe-dropdown-alignment='end'
           >
-            <Link
+            <Tooltip content="Account" children={
+              <Link
               className='hover:text-white me-4 flex items-center text-neutral-600 dark:text-white'
               to='/account'
               id='dropdownMenuButton1'
@@ -35,8 +38,8 @@ export const Nav = () => {
               aria-expanded='false'
             >
               Crate
-            </Link>
-
+            </Link>} />
+            
           </div>
         </div>
       </div>
