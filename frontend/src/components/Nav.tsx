@@ -7,10 +7,10 @@ export const Nav = () => {
     <nav
       className='flex-no-wrap relative flex w-full items-center justify-between bg-blue py-2 shadow-dark-mild dark:bg-neutral-700 lg:flex-wrap lg:justify-start lg:py-4'
     >
-      <div className='flex w-full flex-wrap items-center justify-between px-3'>
+      <div className='relative flex flex-wrap w-full justify-between px-3'>
         <Link
             to="/"
-          className='hover:text-white block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden'
+          className='hover:text-white me-4 text-neutral-600 dark:text-white'
         >
           ButtSnfr
         </Link>

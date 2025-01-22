@@ -7,11 +7,11 @@ export function Tooltip({ content, children }: {content: string, children: React
     <div 
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
-      style={{ position: 'relative' }}
+      className='relative'
     >
       {children}
       {showTooltip && (
-        <div style={{ position: 'absolute', top: '100%', left: 0, background: 'purple', color: 'white', padding: '5px' }}>
+        <div className='absolute left-0 bg-yellow-400 text-white p-1 rounded-md'>
           {content}
         </div>
       )}
