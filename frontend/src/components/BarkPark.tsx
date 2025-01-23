@@ -1,7 +1,7 @@
-import React from "react"
+import React from 'react'
 
 export const BarkPark = () => {
-    return (
-        <div>Bark Park placeholder</div>
-    )
+  return (
+    <div>Bark Park placeholder</div>
+  )
 }
