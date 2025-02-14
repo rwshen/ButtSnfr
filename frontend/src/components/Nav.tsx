@@ -18,7 +18,7 @@ export const Nav = () => {
         <div className='relative flex items-center'>
           <Tooltip
             content='Messages' children={
-              <Link className='hover:text-white me-4 text-neutral-600 dark:text-white' to='/messages'>
+              <Link className='hover:text-white me-4 text-neutral-600 dark:text-white' to='/bark-park'>
                 <span className='[&>svg]:w-5'>
                   Bark Park
                 </span>
@@ -35,7 +35,7 @@ export const Nav = () => {
               content='Account' children={
                 <Link
                   className='hover:text-white me-4 flex items-center text-neutral-600 dark:text-white'
-                  to='/account'
+                  to='/crate'
                   id='dropdownMenuButton1'
                   role='button'
                   data-twe-dropdown-toggle-ref
